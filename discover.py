@@ -58,9 +58,9 @@ def probe_ashby(s):
 
 
 def probe_sr(s):
-    d = jget(f"https://api.smartrecruiters.com/v1/companies/{s}/postings", params={"country": "in", "limit": 1})
-    n = (d or {}).get("totalFound", 0)
-    return (n, d["content"][0]["name"]) if n else (0, "")
+    d = jget(f"https://api.smartrecruiters.com/v1/companies/{s}/postings", params={"country": "in", "limit": 20})
+    hits = [j for j in (d or {}).get("content", []) if ((j.get("location") or {}).get("country") or "").lower() == "in"]
+    return (len(hits), hits[0]["name"]) if hits else (0, "")
 
 
 def probe_recruitee(s):

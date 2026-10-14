@@ -1,35 +1,49 @@
 #!/usr/bin/env python3
-"""Lite career-portal job agent.
+"""Lite career-portal job agent, driven by your resumes.
 
-Polls company career-site APIs (Greenhouse, Lever, Ashby, SmartRecruiters, Workday),
-keeps only India + entry-level/backend roles, stores everything in SQLite, and
-regenerates jobs.xlsx. Your Status / Notes columns in the Excel are preserved.
+Polls company career-site APIs (Greenhouse, Lever, Ashby, SmartRecruiters, Workday, Recruitee, sitemaps),
+keeps only India + entry-level roles that match the skills in the resumes you put in resume/, and
+regenerates jobs.xlsx (sorted by best match). Your Status / Notes columns in the Excel are preserved.
 
   python agent.py                       # one run
   python agent.py --loop --every 180    # run forever, every 3 hours
 """
-import argparse, html, json, re, sqlite3, time
+import argparse, hashlib, html, json, re, sqlite3, time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
 import requests, yaml
 from openpyxl import Workbook, load_workbook
-from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.styles import Font, PatternFill
+from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
+
+import matching
 
 BASE = Path(__file__).parent
 DB_PATH, XLSX = BASE / "jobs.db", BASE / "jobs.xlsx"
+LOGIC_VERSION = 2  # bump to force a re-score of stored jobs
 S = requests.Session()
 S.headers["User-Agent"] = "Mozilla/5.0 (personal job-search agent)"
 KNOWN = set()  # URLs already in the DB (lets the sitemap adapter skip re-fetching pages)
 
 DEFAULT_FILTERS = {
-    "max_years": 1,
-    "title_include": r"software|developer|engineer|backend|back-end|sde|python|java|graduate|trainee|associate|apprentice|mainframe|data|analyst|intern",
+    "max_years": 1,                      # keep jobs asking for <= this many years of experience (or none stated)
+    "exclude_internships": True,         # you graduated in 2026: internships are normally for current students
+    "min_score": 30,                     # 0-100 resume match needed to be listed
+    "min_matched": 2,                    # at least this many JD skills must appear in one of your resumes
+    "extra_skills": [],                  # extra skill keywords to look for in resumes and JDs
+    "title_include": r"software|developer|engineer|backend|back-end|sde|python|java|programmer|graduate|trainee|associate|apprentice|mainframe|data|analyst|consultant|devops|sre|qa|test|ai|ml|platform|full.?stack",
     "title_exclude": r"\b(senior|sr|lead|principal|staff|manager|architect|director|head|vp|iii|iv)\b",
-    "location_include": r"india|hyderabad|bengaluru|bangalore|pune|chennai|mumbai|gurgaon|gurugram|noida|delhi|kolkata|ahmedabad|kochi|\d+ locations?",
+    "location_include": r"india|hyderabad|secunderabad|bengaluru|bangalore|pune|chennai|mumbai|navi mumbai|thane|gurgaon|gurugram|noida|delhi|kolkata|ahmedabad|kochi|coimbatore|trivandrum|thiruvananthapuram|jaipur|indore|chandigarh|nagpur|vadodara|mysuru|mysore|bhubaneswar|visakhapatnam|vizag|mohali|lucknow",
 }
+
+INTERN = re.compile(r"\bintern(ship)?s?\b", re.I)
+_BATCHWORD = r"(?:batch|class|graduat\w*|pass(?:ing)?[\s-]?outs?|cohort)"
+BATCH_FUTURE = re.compile(rf"{_BATCHWORD}[^.]{{0,60}}\b(?:2027|2028|2029)\b|\b(?:2027|2028|2029)\b[^.]{{0,40}}(?:{_BATCHWORD}|intern\w*)", re.I)
+BATCH_2026 = re.compile(rf"{_BATCHWORD}[^.]{{0,60}}\b2026\b|\b2026\b[^.]{{0,40}}{_BATCHWORD}", re.I)
+PREFINAL = re.compile(r"pre[\s-]?final[\s-]?year", re.I)
 
 
 def log(msg):
@@ -58,14 +72,17 @@ def greenhouse(c):
 
 def lever(c):
     for j in get(f"https://api.lever.co/v0/postings/{c['slug']}?mode=json"):
-        yield dict(title=j["text"], location=(j.get("categories") or {}).get("location", ""),
+        cats = j.get("categories") or {}
+        locs = cats.get("allLocations") or [cats.get("location", "")]
+        yield dict(title=j["text"], location="; ".join(filter(None, locs)),
                    url=j["hostedUrl"], posted=datetime.fromtimestamp(j["createdAt"] / 1000).strftime("%Y-%m-%d"),
                    jd=clean(j.get("descriptionPlain") or j.get("description")))
 
 
 def ashby(c):
     for j in get(f"https://api.ashbyhq.com/posting-api/job-board/{c['slug']}")["jobs"]:
-        yield dict(title=j["title"], location=j.get("location", ""), url=j["jobUrl"],
+        locs = [j.get("location", "")] + [x.get("location", "") for x in (j.get("secondaryLocations") or []) if isinstance(x, dict)]
+        yield dict(title=j["title"], location="; ".join(filter(None, locs)), url=j["jobUrl"],
                    posted=(j.get("publishedAt") or "")[:10],
                    jd=clean(j.get("descriptionHtml") or j.get("descriptionPlain")))
 
@@ -82,13 +99,23 @@ def smartrecruiters(c):
                 params={"country": "in", "limit": 100, "offset": off})
         for j in d["content"]:
             loc = j.get("location") or {}
-            yield dict(title=j["name"], location=f"{loc.get('city', '')}, India",
+            cc = (loc.get("country") or "").lower()
+            where = "India" if cc == "in" else cc.upper()  # trust the real country, not our query filter
+            yield dict(title=j["name"], location=", ".join(filter(None, [loc.get("city", ""), loc.get("region", ""), where])),
                        url=f"https://jobs.smartrecruiters.com/{c['slug']}/{j['id']}",
                        posted=(j.get("releasedDate") or "")[:10],
                        jd_fn=lambda pid=j["id"]: _sr_jd(c["slug"], pid))
         off += 100
         if off >= d.get("totalFound", 0):
             break
+
+
+def _wd_detail(api, p):
+    """Workday list rows often say '2 Locations'; the detail call has the real ones. Returns (jd, locations)."""
+    info = get(f"{api}{p}")["jobPostingInfo"]
+    locs = [info.get("location", "")] + list(info.get("additionalLocations") or [])
+    country = (info.get("country") or {}).get("descriptor", "")
+    return clean(info.get("jobDescription")), "; ".join(filter(None, locs + [country]))
 
 
 def workday(c):
@@ -109,7 +136,7 @@ def workday(c):
                 seen.add(p)
                 yield dict(title=j["title"], location=j.get("locationsText", ""),
                            url=f"{host}/en-US/{c['site']}{p}", posted=j.get("postedOn", ""),
-                           jd_fn=lambda p=p: clean(get(f"{api}{p}")["jobPostingInfo"]["jobDescription"]))
+                           jd_fn=lambda p=p: _wd_detail(api, p))
             off += 20
             if off >= d.get("total", 0):
                 break
@@ -165,8 +192,8 @@ def sitemap(c):
                     break
 
 
-ADAPTERS = dict(greenhouse=greenhouse, lever=lever, ashby=ashby,
-                smartrecruiters=smartrecruiters, workday=workday, recruitee=recruitee, sitemap=sitemap)
+ADAPTERS = dict(greenhouse=greenhouse, lever=lever, ashby=ashby, smartrecruiters=smartrecruiters,
+                workday=workday, recruitee=recruitee, sitemap=sitemap)
 
 
 def fetch_company(c):
@@ -180,6 +207,14 @@ def fetch_company(c):
 
 
 # ---------------- filtering ----------------
+def build_filters(user):
+    f = {**DEFAULT_FILTERS, **(user or {})}
+    f["title_in"] = re.compile(f["title_include"], re.I)
+    f["title_out"] = re.compile(f["title_exclude"], re.I)
+    f["loc_in"] = re.compile(rf"\b(?:{f['location_include']})\b", re.I)
+    return f
+
+
 def min_years(jd):
     """Smallest 'N years ... experience' requirement found in the JD; None if not stated."""
     found = []
@@ -190,13 +225,60 @@ def min_years(jd):
     return min(found) if found else None
 
 
+def gate(title, location, F, strict_loc=True, ats=""):
+    """Cheap checks on title + location (run before downloading a JD)."""
+    if not F["title_in"].search(title) or F["title_out"].search(title):
+        return False
+    if re.search(r"\b(2027|2028|2029)\b", title):
+        return False
+    if F["exclude_internships"] and INTERN.search(title):
+        return False
+    location = location or ""
+    if F["loc_in"].search(location):
+        return True
+    # Workday list rows say "2 Locations": allow until the detail call tells us where
+    return (not strict_loc) and ats == "workday" and bool(re.search(r"\d+\s+locations?", location, re.I))
+
+
+def batch_blocked(text):
+    """True if the posting is aimed at 2027+ graduates / pre-final-year students (and not also at 2026)."""
+    if PREFINAL.search(text):
+        return True
+    return bool(BATCH_FUTURE.search(text)) and not BATCH_2026.search(text)
+
+
+def evaluate(title, location, jd, F, resumes, compiled):
+    """-> dict(keep, exp, score, best, matched, missing)"""
+    out = dict(keep=0, exp=None, score=None, best="", matched="", missing="")
+    if not gate(title, location, F):
+        return out
+    out["exp"] = min_years(jd)
+    if out["exp"] is not None and out["exp"] > F["max_years"]:
+        return out
+    if batch_blocked(f"{title} {jd}"):
+        return out
+    if resumes and jd:
+        r = matching.score_job(f"{title} {jd}", resumes, compiled)
+        out.update(score=r["score"], best=r["best"], matched=", ".join(r["matched"]), missing=", ".join(r["missing"]))
+        if r["score"] < F["min_score"] or len(r["matched"]) < F["min_matched"]:
+            return out
+    out["keep"] = 1
+    return out
+
+
 # ---------------- storage ----------------
 def init_db():
     db = sqlite3.connect(DB_PATH)
     db.execute("""CREATE TABLE IF NOT EXISTS jobs(
         url TEXT PRIMARY KEY, company TEXT, title TEXT, location TEXT, posted TEXT, jd TEXT,
         exp INTEGER, first_seen TEXT, last_seen TEXT, active INTEGER DEFAULT 1, keep INTEGER DEFAULT 1,
-        status TEXT DEFAULT 'New', notes TEXT DEFAULT '')""")
+        status TEXT DEFAULT 'New', notes TEXT DEFAULT '', score INTEGER, best_resume TEXT, matched TEXT, missing TEXT)""")
+    have = {r[1] for r in db.execute("PRAGMA table_info(jobs)")}
+    for col, typ in (("score", "INTEGER"), ("best_resume", "TEXT"), ("matched", "TEXT"), ("missing", "TEXT")):
+        if col not in have:
+            db.execute(f"ALTER TABLE jobs ADD COLUMN {col} {typ}")
+    db.execute("CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY, v TEXT)")
+    db.commit()
     return db
 
 
@@ -221,8 +303,9 @@ def sync_from_xlsx(db):
         log(f"could not read existing Excel (is it open?): {e}")
 
 
-COLS = ["Company", "Title", "Location", "Posted", "Exp (yrs)", "Link", "First Seen", "Status", "Notes", "JD"]
-WIDTHS = [20, 45, 22, 12, 9, 40, 12, 16, 30, 80]
+COLS = ["Company", "Title", "Location", "Match %", "Best Resume", "Exp (yrs)", "Posted", "Link", "First Seen",
+        "Status", "Notes", "Matched Skills", "Missing Skills", "JD"]
+WIDTHS = [20, 45, 24, 9, 22, 9, 12, 40, 18, 16, 30, 40, 40, 80]
 
 
 def export(db):
@@ -234,23 +317,25 @@ def export(db):
         for c in ws[1]:
             c.font = Font(bold=True, color="FFFFFF", name="Arial")
             c.fill = PatternFill("solid", fgColor="1F4E78")
-        rows = db.execute("""SELECT company,title,location,posted,exp,url,first_seen,status,notes,jd
-                             FROM jobs WHERE keep=1 AND active=? ORDER BY first_seen DESC, company""", (active,))
+        rows = db.execute("""SELECT company,title,location,score,best_resume,exp,posted,url,first_seen,status,notes,
+                                    matched,missing,jd
+                             FROM jobs WHERE keep=1 AND active=?
+                             ORDER BY (score IS NULL), score DESC, first_seen DESC, company""", (active,))
         for r in rows:
             r = list(r)
-            r[9] = (r[9] or "")[:32000]
+            r[13] = (r[13] or "")[:32000]
             ws.append(r)
-            link = ws.cell(ws.max_row, 6)
-            link.hyperlink = r[5]
+            link = ws.cell(ws.max_row, 8)
+            link.hyperlink = r[7]
             link.font = Font(color="0563C1", underline="single", name="Arial")
         for i, w in enumerate(WIDTHS, 1):
-            ws.column_dimensions[chr(64 + i)].width = w
+            ws.column_dimensions[get_column_letter(i)].width = w
         ws.freeze_panes = "A2"
         ws.auto_filter.ref = ws.dimensions
         dv = DataValidation(type="list", allow_blank=True,
                             formula1='"New,Interested,Applied,Referral asked,Interview,Rejected,Skip"')
         ws.add_data_validation(dv)
-        dv.add(f"H2:H{max(ws.max_row, 2) + 500}")
+        dv.add(f"J2:J{max(ws.max_row, 2) + 500}")
     tmp = XLSX.with_suffix(".tmp.xlsx")
     try:
         wb.save(tmp)
@@ -263,9 +348,13 @@ def export(db):
 # ---------------- one polling cycle ----------------
 def run_once():
     cfg = yaml.safe_load((BASE / "companies.yaml").read_text())
-    f = {**DEFAULT_FILTERS, **(cfg.get("filters") or {})}
-    title_in, title_out = re.compile(f["title_include"], re.I), re.compile(f["title_exclude"], re.I)
-    loc_in = re.compile(f["location_include"], re.I)
+    F = build_filters(cfg.get("filters"))
+    compiled = matching.compile_skills(F["extra_skills"])
+    resume_dir = BASE / "resume"
+    resume_dir.mkdir(exist_ok=True)
+    resumes = matching.load_resumes(resume_dir, compiled, log)
+    if not resumes:
+        log("WARNING: no resumes found in resume/ - listing all entry-level India jobs, unranked")
 
     db = init_db()
     t0 = db.total_changes
@@ -277,6 +366,20 @@ def run_once():
     KNOWN.update(r[0] for r in db.execute("SELECT url FROM jobs"))
     start = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    # re-score everything already stored when resumes / filters / logic change (no re-download needed)
+    sig = hashlib.sha1(json.dumps([LOGIC_VERSION, cfg.get("filters"), sorted((k, sorted(v)) for k, v in resumes.items())],
+                                  sort_keys=True, default=str).encode()).hexdigest()
+    old = db.execute("SELECT v FROM meta WHERE k='sig'").fetchone()
+    rescored = False
+    if not old or old[0] != sig:
+        for url, title, loc, jd in db.execute("SELECT url,title,location,jd FROM jobs").fetchall():
+            ev = evaluate(title, loc, jd or "", F, resumes, compiled)
+            db.execute("UPDATE jobs SET keep=?, exp=?, score=?, best_resume=?, matched=?, missing=? WHERE url=?",
+                       (ev["keep"], ev["exp"], ev["score"], ev["best"], ev["matched"], ev["missing"], url))
+        db.execute("INSERT OR REPLACE INTO meta VALUES('sig', ?)", (sig,))
+        rescored = True
+        log("resumes/filters changed: re-scored stored jobs")
+
     with ThreadPoolExecutor(8) as ex:
         results = list(ex.map(fetch_company, cfg["companies"]))
 
@@ -286,39 +389,37 @@ def run_once():
             continue
         ok.add(c["name"])
         for j in jobs:
-            if j.get("known"):
+            if j.get("known") or j["url"] in KNOWN:
                 db.execute("UPDATE jobs SET last_seen=?, active=1 WHERE url=?", (start, j["url"]))
-                continue
-            if not title_in.search(j["title"]) or title_out.search(j["title"]):
-                continue
-            if j["location"] and not loc_in.search(j["location"]):
-                continue
-            if db.execute("SELECT 1 FROM jobs WHERE url=?", (j["url"],)).fetchone():
-                db.execute("UPDATE jobs SET last_seen=?, active=1 WHERE url=?", (start, j["url"]))
-            else:
+            elif gate(j["title"], j["location"], F, strict_loc=False, ats=c["ats"]):
                 pending.append((c["name"], j))
 
     def enrich(item):
         name, j = item
-        try:
-            jd = j.get("jd") or (j["jd_fn"]() if j.get("jd_fn") else "")
-        except Exception:
-            jd = ""
-        return name, j, jd
+        jd, loc = j.get("jd") or "", j["location"]
+        if not jd and j.get("jd_fn"):
+            try:
+                r = j["jd_fn"]()
+                jd, loc = r if isinstance(r, tuple) else (r, loc)
+            except Exception:
+                pass
+        return name, j, jd or "", loc or j["location"]
 
     new = 0
     with ThreadPoolExecutor(6) as ex:
-        for name, j, jd in ex.map(enrich, pending):
-            exp = min_years(jd)
-            keep = int(exp is None or exp <= f["max_years"])
-            db.execute("INSERT OR IGNORE INTO jobs(url,company,title,location,posted,jd,exp,first_seen,last_seen,keep)"
-                       " VALUES(?,?,?,?,?,?,?,?,?,?)",
-                       (j["url"], name, j["title"], j["location"], j.get("posted", ""), jd, exp, start, start, keep))
-            new += keep
+        for name, j, jd, loc in ex.map(enrich, pending):
+            ev = evaluate(j["title"], loc, jd, F, resumes, compiled)
+            db.execute("""INSERT OR IGNORE INTO jobs(url,company,title,location,posted,jd,exp,first_seen,last_seen,keep,
+                                                     score,best_resume,matched,missing)
+                          VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                       (j["url"], name, j["title"], loc, j.get("posted", ""), jd, ev["exp"], start, start, ev["keep"],
+                        ev["score"], ev["best"], ev["matched"], ev["missing"]))
+            new += ev["keep"]
 
     for name in ok:  # only close jobs for companies we fetched successfully this run
         db.execute("UPDATE jobs SET active=0 WHERE company=? AND last_seen<? AND keep=1", (name, start))
-    changed = bool(synced or pending or snap() != before or not XLSX.exists())
+
+    changed = bool(synced or pending or rescored or snap() != before or not XLSX.exists())
     if not changed:
         db.rollback()  # nothing new: leave jobs.db / jobs.xlsx byte-identical (keeps git history small)
         log("no changes")
