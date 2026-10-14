@@ -1,5 +1,3 @@
-# Seeded from the public ConorsCode/open-jobs-data list (global tech companies; the agent keeps only India roles).
-# Grow it with:  python discover.py
 filters: {max_years: 1}
 companies:
 - {name: Stripe, ats: greenhouse, slug: stripe}
@@ -368,3 +366,34 @@ companies:
 - {name: PayPal, ats: workday, tenant: paypal, wd: wd1, site: jobs}
 - {name: Nvidia, ats: workday, tenant: nvidia, wd: wd5, site: NVIDIAExternalCareerSite}
 - {name: Workday Inc, ats: workday, tenant: workday, wd: wd5, site: Workday}
+- {name: CRED, ats: lever, slug: cred}
+- {name: Meesho, ats: lever, slug: meesho}
+- {name: Swiggy, ats: smartrecruiters, slug: Swiggy}
+- {name: Paytm, ats: lever, slug: paytm}
+- {name: Groww, ats: greenhouse, slug: groww}
+- {name: Upstox, ats: smartrecruiters, slug: Upstox}
+- {name: Freshworks, ats: smartrecruiters, slug: Freshworks}
+- {name: Atlan, ats: ashby, slug: atlan}
+- {name: Unacademy, ats: smartrecruiters, slug: Unacademy}
+- {name: Cars24, ats: smartrecruiters, slug: Cars24}
+- {name: Ixigo, ats: smartrecruiters, slug: Ixigo}
+- {name: Lendingkart, ats: smartrecruiters, slug: Lendingkart}
+- {name: Zeta, ats: lever, slug: zeta}
+- {name: Sarvam AI, ats: ashby, slug: sarvam}
+- {name: Mindtickle, ats: lever, slug: mindtickle}
+- {name: Whatfix, ats: smartrecruiters, slug: Whatfix}
+- {name: Newton School, ats: smartrecruiters, slug: NewtonSchool}
+- {name: Hevo Data, ats: lever, slug: hevodata}
+- {name: Sigmoid, ats: greenhouse, slug: sigmoid}
+- {name: Druva, ats: greenhouse, slug: druva}
+- {name: Pubmatic, ats: greenhouse, slug: pubmatic}
+- {name: InMobi, ats: greenhouse, slug: inmobi}
+- {name: Pocket FM, ats: lever, slug: pocketfm}
+- {name: Fampay, ats: lever, slug: fampay}
+- {name: ServiceNow, ats: smartrecruiters, slug: Servicenow}
+- {name: Experian, ats: smartrecruiters, slug: Experian}
+- {name: LinkedIn, ats: lever, slug: linkedin}
+- {name: Pure Storage, ats: greenhouse, slug: purestorage}
+- {name: Thoughtworks, ats: greenhouse, slug: thoughtworks}
+- {name: Endava, ats: smartrecruiters, slug: Endava}
+- {name: Sutherland, ats: smartrecruiters, slug: Sutherland}
