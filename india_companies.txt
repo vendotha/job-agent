@@ -1,0 +1,314 @@
+# One company per line; add your own. Lines starting with # are ignored.
+# --- Indian product companies and startups ---
+Razorpay
+CRED
+Meesho
+Swiggy
+Zomato
+PhonePe
+Paytm
+Flipkart
+Myntra
+Groww
+Zerodha
+Upstox
+Dream11
+Dream Sports
+ShareChat
+Zepto
+Nykaa
+PharmEasy
+Practo
+Postman
+Freshworks
+Zoho
+BrowserStack
+Chargebee
+Hasura
+Atlan
+Rapido
+Ola
+Lenskart
+Urban Company
+Unacademy
+PhysicsWallah
+upGrad
+Vedantu
+Cars24
+Spinny
+OYO
+MakeMyTrip
+Ixigo
+RedBus
+Delhivery
+Shiprocket
+Licious
+BigBasket
+Slice
+Jupiter
+Navi
+Juspay
+Cashfree
+Pine Labs
+BharatPe
+MobiKwik
+Kissht
+Lendingkart
+Zeta
+Setu
+Sarvam AI
+Krutrim
+Yellow.ai
+Gupshup
+Exotel
+Sprinklr
+CleverTap
+MoEngage
+Netcore
+Innovaccer
+Mindtickle
+Whatfix
+Darwinbox
+Keka
+Zluri
+LeadSquared
+Capillary Technologies
+Observe.AI
+Uniphore
+Haptik
+Turing
+Scaler
+Newton School
+Rocketlane
+Hevo Data
+Sigmoid
+Fractal
+Tredence
+Mu Sigma
+Quantiphi
+ThoughtSpot
+Druva
+Icertis
+Pubmatic
+InMobi
+Games24x7
+Mobile Premier League
+Nazara
+Rephrase.ai
+Ather Energy
+Ola Electric
+Pocket FM
+Kuku FM
+Apna
+Cult.fit
+Eka Care
+Even Healthcare
+Healthifyme
+Khatabook
+OkCredit
+Zolve
+Jar
+Fampay
+Stable Money
+Smallcase
+INDmoney
+Dhan
+Angel One
+5paisa
+Policybazaar
+Acko
+Digit Insurance
+# --- Global companies / GCCs with big India (esp. Hyderabad) teams ---
+Microsoft
+Google
+Amazon
+Apple
+Meta
+Oracle
+Adobe
+Salesforce
+ServiceNow
+VMware
+Broadcom
+Qualcomm
+Intel
+AMD
+Nvidia
+Micron
+Texas Instruments
+Cisco
+Dell Technologies
+HP
+HPE
+IBM
+SAP
+Intuit
+PayPal
+Visa
+Mastercard
+American Express
+JPMorgan Chase
+Goldman Sachs
+Morgan Stanley
+Wells Fargo
+Citi
+Bank of America
+Deutsche Bank
+Barclays
+HSBC
+UBS
+BlackRock
+Fidelity Investments
+State Street
+Charles Schwab
+Vanguard
+Northern Trust
+S&P Global
+Moodys
+MSCI
+Thomson Reuters
+Bloomberg
+Nasdaq
+FactSet
+Verisk
+Experian
+TransUnion
+Equifax
+Fiserv
+FIS
+Global Payments
+Worldpay
+Broadridge
+TriNet
+Optum
+UnitedHealth Group
+Cigna
+Elevance Health
+McKesson
+Walmart Global Tech
+Target
+Lowes
+Home Depot
+Best Buy
+Nike
+PepsiCo
+Novartis
+Pfizer
+Sanofi
+Bristol Myers Squibb
+Amgen
+Eli Lilly
+GE
+Honeywell
+Siemens
+Bosch
+Schneider Electric
+ABB
+Rockwell Automation
+Emerson
+Caterpillar
+John Deere
+Cummins
+Ford
+General Motors
+Tesla
+Uber
+Airbnb
+Netflix
+LinkedIn
+Atlassian
+Autodesk
+Synopsys
+Cadence
+Ansys
+Dassault Systemes
+PTC
+Workday
+Splunk
+Palo Alto Networks
+Fortinet
+CrowdStrike
+Zscaler
+Okta
+Twilio
+Stripe
+Databricks
+Snowflake
+MongoDB
+Elastic
+Confluent
+HashiCorp
+Datadog
+New Relic
+Dynatrace
+Pure Storage
+NetApp
+Nutanix
+Juniper Networks
+Arista
+Ciena
+Ericsson
+Nokia
+Hitachi Vantara
+Swiss Re
+Munich Re
+Allianz
+AXA
+Prudential
+MetLife
+Aon
+Marsh McLennan
+Zurich Insurance
+# --- IT services / consulting ---
+Thoughtworks
+CGI
+Capgemini
+Accenture
+Deloitte
+EY
+PwC
+KPMG
+Cognizant
+Infosys
+TCS
+Wipro
+HCLTech
+Tech Mahindra
+LTIMindtree
+Mphasis
+Persistent Systems
+Coforge
+Hexaware
+Zensar
+Cyient
+Birlasoft
+Sonata Software
+Mastek
+Happiest Minds
+Tata Elxsi
+KPIT
+L&T Technology Services
+EPAM
+Globant
+Endava
+Nagarro
+GlobalLogic
+Virtusa
+Sutherland
+Genpact
+WNS
+EXL
+Firstsource
+Concentrix
+TaskUs
+# --- Banks / large Indian corporates ---
+Kotak Mahindra Bank
+ICICI Bank
+HDFC Bank
+Axis Bank
+Bajaj Finserv
+Tata Digital
+Reliance Jio
+Airtel
+Mahindra
+TVS Motor

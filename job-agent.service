@@ -1,0 +1,14 @@
+[Unit]
+Description=Job agent (career portals -> jobs.xlsx)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/job-agent
+ExecStart=/home/ubuntu/job-agent/venv/bin/python agent.py --loop --every 180
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

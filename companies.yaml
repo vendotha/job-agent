@@ -1,0 +1,370 @@
+# Seeded from the public ConorsCode/open-jobs-data list (global tech companies; the agent keeps only India roles).
+# Grow it with:  python discover.py
+filters: {max_years: 1}
+companies:
+- {name: Stripe, ats: greenhouse, slug: stripe}
+- {name: Airbnb, ats: greenhouse, slug: airbnb}
+- {name: Coinbase, ats: greenhouse, slug: coinbase}
+- {name: Robinhood, ats: greenhouse, slug: robinhood}
+- {name: Figma, ats: greenhouse, slug: figma}
+- {name: Discord, ats: greenhouse, slug: discord}
+- {name: Asana, ats: greenhouse, slug: asana}
+- {name: Pinterest, ats: greenhouse, slug: pinterest}
+- {name: Reddit, ats: greenhouse, slug: reddit}
+- {name: Cloudflare, ats: greenhouse, slug: cloudflare}
+- {name: Affirm, ats: greenhouse, slug: affirm}
+- {name: Instacart, ats: greenhouse, slug: instacart}
+- {name: Datadog, ats: greenhouse, slug: datadog}
+- {name: GitLab, ats: greenhouse, slug: gitlab}
+- {name: Dropbox, ats: greenhouse, slug: dropbox}
+- {name: Twitch, ats: greenhouse, slug: twitch}
+- {name: Anthropic, ats: greenhouse, slug: anthropic}
+- {name: Databricks, ats: greenhouse, slug: databricks}
+- {name: Samsara, ats: greenhouse, slug: samsara}
+- {name: Brex, ats: greenhouse, slug: brex}
+- {name: Flexport, ats: greenhouse, slug: flexport}
+- {name: Squarespace, ats: greenhouse, slug: squarespace}
+- {name: Doximity, ats: greenhouse, slug: doximity}
+- {name: Lyft, ats: greenhouse, slug: lyft}
+- {name: Roblox, ats: greenhouse, slug: roblox}
+- {name: Okta, ats: greenhouse, slug: okta}
+- {name: Elastic, ats: greenhouse, slug: elastic}
+- {name: MongoDB, ats: greenhouse, slug: mongodb}
+- {name: Twilio, ats: greenhouse, slug: twilio}
+- {name: Zscaler, ats: greenhouse, slug: zscaler}
+- {name: Udemy, ats: greenhouse, slug: udemy}
+- {name: Peloton, ats: greenhouse, slug: peloton}
+- {name: Carta, ats: greenhouse, slug: carta}
+- {name: Checkr, ats: greenhouse, slug: checkr}
+- {name: Duolingo, ats: greenhouse, slug: duolingo}
+- {name: Faire, ats: greenhouse, slug: faire}
+- {name: Mixpanel, ats: greenhouse, slug: mixpanel}
+- {name: Remote, ats: greenhouse, slug: remote}
+- {name: Scale AI, ats: greenhouse, slug: scaleai}
+- {name: Vercel, ats: greenhouse, slug: vercel}
+- {name: Webflow, ats: greenhouse, slug: webflow}
+- {name: Airtable, ats: greenhouse, slug: airtable}
+- {name: Calendly, ats: greenhouse, slug: calendly}
+- {name: PagerDuty, ats: greenhouse, slug: pagerduty}
+- {name: Gusto, ats: greenhouse, slug: gusto}
+- {name: Chime, ats: greenhouse, slug: chime}
+- {name: Toast, ats: greenhouse, slug: toast}
+- {name: Postman, ats: greenhouse, slug: postman}
+- {name: LaunchDarkly, ats: greenhouse, slug: launchdarkly}
+- {name: Amplitude, ats: greenhouse, slug: amplitude}
+- {name: Justworks, ats: greenhouse, slug: justworks}
+- {name: Smartsheet, ats: greenhouse, slug: smartsheet}
+- {name: Nextdoor, ats: greenhouse, slug: nextdoor}
+- {name: Betterment, ats: greenhouse, slug: betterment}
+- {name: SoFi, ats: greenhouse, slug: sofi}
+- {name: N, ats: greenhouse, slug: n26}
+- {name: GoCardless, ats: greenhouse, slug: gocardless}
+- {name: Monzo, ats: greenhouse, slug: monzo}
+- {name: Grafana Labs, ats: greenhouse, slug: grafanalabs}
+- {name: Anduril, ats: greenhouse, slug: andurilindustries}
+- {name: Jane Street, ats: greenhouse, slug: janestreet}
+- {name: Blend, ats: greenhouse, slug: blend}
+- {name: Marqeta, ats: greenhouse, slug: marqeta}
+- {name: Bill.com, ats: greenhouse, slug: billcom}
+- {name: Attentive, ats: greenhouse, slug: attentive}
+- {name: Braze, ats: greenhouse, slug: braze}
+- {name: Iterable, ats: greenhouse, slug: iterable}
+- {name: Contentful, ats: greenhouse, slug: contentful}
+- {name: Algolia, ats: greenhouse, slug: algolia}
+- {name: Fastly, ats: greenhouse, slug: fastly}
+- {name: Netlify, ats: greenhouse, slug: netlify}
+- {name: CircleCI, ats: greenhouse, slug: circleci}
+- {name: PlanetScale, ats: greenhouse, slug: planetscale}
+- {name: Temporal, ats: greenhouse, slug: temporaltechnologies}
+- {name: Together AI, ats: greenhouse, slug: togetherai}
+- {name: Glean, ats: greenhouse, slug: gleanwork}
+- {name: Intercom, ats: greenhouse, slug: intercom}
+- {name: Typeform, ats: greenhouse, slug: typeform}
+- {name: StockX, ats: greenhouse, slug: stockx}
+- {name: Cameo, ats: greenhouse, slug: cameo}
+- {name: Kickstarter, ats: greenhouse, slug: kickstarter}
+- {name: Wikimedia Foundation, ats: greenhouse, slug: wikimedia}
+- {name: Mozilla, ats: greenhouse, slug: mozilla}
+- {name: Proton, ats: greenhouse, slug: proton}
+- {name: Bitwarden, ats: greenhouse, slug: bitwarden}
+- {name: Wiz, ats: greenhouse, slug: wizinc}
+- {name: Tailscale, ats: greenhouse, slug: tailscale}
+- {name: JFrog, ats: greenhouse, slug: jfrog}
+- {name: Chainguard, ats: greenhouse, slug: chainguard}
+- {name: Oura, ats: greenhouse, slug: oura}
+- {name: Maven Clinic, ats: greenhouse, slug: mavenclinic}
+- {name: Recursion Pharmaceuticals, ats: greenhouse, slug: recursionpharmaceuticals}
+- {name: Verkada, ats: greenhouse, slug: verkada}
+- {name: Rubrik, ats: greenhouse, slug: rubrik}
+- {name: SambaNova Systems, ats: greenhouse, slug: sambanovasystems}
+- {name: CoreWeave, ats: greenhouse, slug: coreweave}
+- {name: Nuro, ats: greenhouse, slug: nuro}
+- {name: Rocket Lab, ats: greenhouse, slug: rocketlab}
+- {name: Varda Space, ats: greenhouse, slug: vardaspace}
+- {name: Redwood Materials, ats: greenhouse, slug: redwoodmaterials}
+- {name: Motive, ats: greenhouse, slug: gomotive}
+- {name: Carvana, ats: greenhouse, slug: carvana}
+- {name: Highnote, ats: greenhouse, slug: highnote}
+- {name: Lithic, ats: greenhouse, slug: lithic}
+- {name: TripActions, ats: greenhouse, slug: tripactions}
+- {name: Prisma, ats: greenhouse, slug: prisma}
+- {name: Descope, ats: greenhouse, slug: descope}
+- {name: Cribl, ats: greenhouse, slug: cribl}
+- {name: Honeycomb, ats: greenhouse, slug: honeycomb}
+- {name: Pendo, ats: greenhouse, slug: pendo}
+- {name: Airship, ats: greenhouse, slug: airship}
+- {name: Customer.io, ats: greenhouse, slug: customerio}
+- {name: Klaviyo, ats: greenhouse, slug: klaviyo}
+- {name: Narvar, ats: greenhouse, slug: narvar}
+- {name: Flexe, ats: greenhouse, slug: flexe}
+- {name: project, ats: greenhouse, slug: project44}
+- {name: FourKites, ats: greenhouse, slug: fourkites}
+- {name: Bringg, ats: greenhouse, slug: bringg}
+- {name: Remote.com, ats: greenhouse, slug: remotecom}
+- {name: Lattice, ats: greenhouse, slug: lattice}
+- {name: Culture Amp, ats: greenhouse, slug: cultureamp}
+- {name: Greenhouse Software, ats: greenhouse, slug: greenhouse}
+- {name: Textio, ats: greenhouse, slug: textio}
+- {name: SeekOut, ats: greenhouse, slug: seekout}
+- {name: HackerRank, ats: greenhouse, slug: hackerrank}
+- {name: Karat, ats: greenhouse, slug: karat}
+- {name: ZipRecruiter, ats: greenhouse, slug: ziprecruiter}
+- {name: Upwork, ats: greenhouse, slug: upwork}
+- {name: DoorDash, ats: greenhouse, slug: doordashusa}
+- {name: Netskope, ats: greenhouse, slug: netskope}
+- {name: Orca Security, ats: greenhouse, slug: orcasecurity}
+- {name: Huntress, ats: greenhouse, slug: huntress}
+- {name: Abnormal Security, ats: greenhouse, slug: abnormalsecurity}
+- {name: Axonius, ats: greenhouse, slug: axonius}
+- {name: Cato Networks, ats: greenhouse, slug: catonetworks}
+- {name: KnowBe, ats: greenhouse, slug: knowbe4}
+- {name: Recorded Future, ats: greenhouse, slug: recordedfuture}
+- {name: Censys, ats: greenhouse, slug: censys}
+- {name: BigID, ats: greenhouse, slug: bigid}
+- {name: OneTrust, ats: greenhouse, slug: onetrust}
+- {name: Osano, ats: greenhouse, slug: osano}
+- {name: Hightouch, ats: greenhouse, slug: hightouch}
+- {name: Starburst, ats: greenhouse, slug: starburst}
+- {name: Imply, ats: greenhouse, slug: imply}
+- {name: Labelbox, ats: greenhouse, slug: labelbox}
+- {name: Snorkel AI, ats: greenhouse, slug: snorkelai}
+- {name: Domino Data Lab, ats: greenhouse, slug: dominodatalab}
+- {name: Arize AI, ats: greenhouse, slug: arizeai}
+- {name: New Relic, ats: greenhouse, slug: newrelic}
+- {name: Sumo Logic, ats: greenhouse, slug: sumologic}
+- {name: Globalization Partners, ats: greenhouse, slug: globalizationpartners}
+- {name: Epic Games, ats: greenhouse, slug: epicgames}
+- {name: Riot Games, ats: greenhouse, slug: riotgames}
+- {name: Scopely, ats: greenhouse, slug: scopely}
+- {name: Gemini, ats: greenhouse, slug: gemini}
+- {name: Fireblocks, ats: greenhouse, slug: fireblocks}
+- {name: BitGo, ats: greenhouse, slug: bitgo}
+- {name: Consensys, ats: greenhouse, slug: consensys}
+- {name: Figure Technologies, ats: greenhouse, slug: figure}
+- {name: Current, ats: greenhouse, slug: current}
+- {name: Public.com, ats: greenhouse, slug: public}
+- {name: Trade Republic, ats: greenhouse, slug: traderepublicbank}
+- {name: Homelight, ats: greenhouse, slug: homelight}
+- {name: Orchard, ats: greenhouse, slug: orchard}
+- {name: Knock, ats: greenhouse, slug: knock}
+- {name: Human Interest, ats: greenhouse, slug: humaninterest}
+- {name: Vestwell, ats: greenhouse, slug: vestwell}
+- {name: Alpaca, ats: greenhouse, slug: alpaca}
+- {name: Cleo, ats: greenhouse, slug: cleo}
+- {name: Earnin, ats: greenhouse, slug: earnin}
+- {name: Ginkgo Bioworks, ats: greenhouse, slug: ginkgobioworks}
+- {name: Freenome, ats: greenhouse, slug: freenome}
+- {name: Natera, ats: greenhouse, slug: natera}
+- {name: Truveta, ats: greenhouse, slug: truveta}
+- {name: Flatiron Health, ats: greenhouse, slug: flatironhealth}
+- {name: Calico Labs, ats: greenhouse, slug: calicolabs}
+- {name: Beam Therapeutics, ats: greenhouse, slug: beamtherapeutics}
+- {name: Sword Health, ats: greenhouse, slug: swordhealth}
+- {name: Omada Health, ats: greenhouse, slug: omadahealth}
+- {name: One Medical, ats: greenhouse, slug: onemedical}
+- {name: Parsley Health, ats: greenhouse, slug: parsleyhealth}
+- {name: Calm, ats: greenhouse, slug: calm}
+- {name: BetterHelp, ats: greenhouse, slug: betterhelp}
+- {name: Talkspace, ats: greenhouse, slug: talkspace}
+- {name: Cerebral, ats: greenhouse, slug: cerebral}
+- {name: Modern Health, ats: greenhouse, slug: modernhealth}
+- {name: MyFitnessPal, ats: greenhouse, slug: myfitnesspal}
+- {name: Tempo Fit, ats: greenhouse, slug: tempo}
+- {name: Future Fit, ats: greenhouse, slug: future}
+- {name: ClassPass, ats: greenhouse, slug: classpass}
+- {name: Mindbody, ats: greenhouse, slug: mindbody}
+- {name: Gympass, ats: greenhouse, slug: gympass}
+- {name: Coursera, ats: greenhouse, slug: coursera}
+- {name: Udacity, ats: greenhouse, slug: udacity}
+- {name: Khan Academy, ats: greenhouse, slug: khanacademy}
+- {name: MasterClass, ats: greenhouse, slug: masterclass}
+- {name: Outschool, ats: greenhouse, slug: outschool}
+- {name: Springboard, ats: greenhouse, slug: springboard}
+- {name: Newsela, ats: greenhouse, slug: newsela}
+- {name: IXL Learning, ats: greenhouse, slug: ixllearning}
+- {name: GoGuardian, ats: greenhouse, slug: goguardian}
+- {name: Imbue, ats: greenhouse, slug: imbue}
+- {name: Inflection AI, ats: greenhouse, slug: inflectionai}
+- {name: Stability AI, ats: greenhouse, slug: stabilityai}
+- {name: Black Forest Labs, ats: greenhouse, slug: blackforestlabs}
+- {name: Relativity, ats: greenhouse, slug: relativity}
+- {name: Everlaw, ats: greenhouse, slug: everlaw}
+- {name: Alloy, ats: greenhouse, slug: alloy}
+- {name: Forter, ats: greenhouse, slug: forter}
+- {name: Riskified, ats: greenhouse, slug: riskified}
+- {name: Feedzai, ats: greenhouse, slug: feedzai}
+- {name: ComplyAdvantage, ats: greenhouse, slug: complyadvantage}
+- {name: Nova Credit, ats: greenhouse, slug: novacredit}
+- {name: Homeward, ats: greenhouse, slug: homeward}
+- {name: Vacasa, ats: greenhouse, slug: vacasa}
+- {name: Kasa Living, ats: greenhouse, slug: kasa}
+- {name: TaskRabbit, ats: greenhouse, slug: taskrabbit}
+- {name: Instawork, ats: greenhouse, slug: instawork}
+- {name: Movable Ink, ats: greenhouse, slug: movableink}
+- {name: Bloomreach, ats: greenhouse, slug: bloomreach}
+- {name: QuillBot, ats: greenhouse, slug: quillbot}
+- {name: Invisible Technologies, ats: greenhouse, slug: invisibletech}
+- {name: Turing, ats: greenhouse, slug: turing}
+- {name: Wrike, ats: greenhouse, slug: wrike}
+- {name: Aha!, ats: greenhouse, slug: aha}
+- {name: Qualtrics, ats: greenhouse, slug: qualtrics}
+- {name: Backblaze, ats: greenhouse, slug: backblaze}
+- {name: Wasabi Technologies, ats: greenhouse, slug: wasabi}
+- {name: MinIO, ats: greenhouse, slug: minio}
+- {name: Filecoin Foundation, ats: greenhouse, slug: filecoinfoundation}
+- {name: Prismatic, ats: greenhouse, slug: prismatic}
+- {name: Workato, ats: greenhouse, slug: workato}
+- {name: Celigo, ats: greenhouse, slug: celigo}
+- {name: Appian, ats: greenhouse, slug: appian}
+- {name: Mercury, ats: greenhouse, slug: mercury}
+- {name: TrueLayer, ats: greenhouse, slug: truelayer}
+- {name: Sezzle, ats: greenhouse, slug: sezzle}
+- {name: Luno, ats: greenhouse, slug: luno}
+- {name: Bitpanda, ats: greenhouse, slug: bitpanda}
+- {name: Binance, ats: greenhouse, slug: binance}
+- {name: OKX, ats: greenhouse, slug: okx}
+- {name: Bybit, ats: greenhouse, slug: bybit}
+- {name: Vectara, ats: greenhouse, slug: vectara}
+- {name: AssemblyAI, ats: greenhouse, slug: assemblyai}
+- {name: Speechmatics, ats: greenhouse, slug: speechmatics}
+- {name: Otter.ai, ats: greenhouse, slug: otterai}
+- {name: Cresta, ats: greenhouse, slug: cresta}
+- {name: Observe.AI, ats: greenhouse, slug: observeai}
+- {name: PolyAI, ats: greenhouse, slug: polyai}
+- {name: ManyChat, ats: greenhouse, slug: manychat}
+- {name: 6sense, ats: greenhouse, slug: 6sense}
+- {name: ZoomInfo, ats: greenhouse, slug: zoominfo}
+- {name: Apollo.io, ats: greenhouse, slug: apolloio}
+- {name: Cognism, ats: greenhouse, slug: cognism}
+- {name: Mercari, ats: greenhouse, slug: mercari}
+- {name: OfferUp, ats: greenhouse, slug: offerup}
+- {name: StitchFix, ats: greenhouse, slug: stitchfix}
+- {name: Grailed, ats: greenhouse, slug: grailed}
+- {name: HelloFresh, ats: greenhouse, slug: hellofresh}
+- {name: Home Chef, ats: greenhouse, slug: homechef}
+- {name: Thrive Market, ats: greenhouse, slug: thrivemarket}
+- {name: Misfits Market, ats: greenhouse, slug: misfitsmarket}
+- {name: Weee!, ats: greenhouse, slug: weee}
+- {name: Palantir, ats: lever, slug: palantir}
+- {name: Ro, ats: lever, slug: ro}
+- {name: Veeva Systems, ats: lever, slug: veeva}
+- {name: Tala, ats: lever, slug: tala}
+- {name: Wattpad, ats: lever, slug: wattpad}
+- {name: Aircall, ats: lever, slug: aircall}
+- {name: BrightEdge, ats: lever, slug: brightedge}
+- {name: Zoox, ats: lever, slug: zoox}
+- {name: Outreach, ats: lever, slug: outreach}
+- {name: Highspot, ats: lever, slug: highspot}
+- {name: Kapwing, ats: lever, slug: kapwing}
+- {name: Ramp, ats: ashby, slug: ramp}
+- {name: Linear, ats: ashby, slug: linear}
+- {name: OpenAI, ats: ashby, slug: openai}
+- {name: Watershed, ats: ashby, slug: watershed}
+- {name: Substack, ats: ashby, slug: substack}
+- {name: Notion, ats: ashby, slug: notion}
+- {name: Runway, ats: ashby, slug: runway}
+- {name: Synthesia, ats: ashby, slug: synthesia}
+- {name: Cursor (Anysphere), ats: ashby, slug: cursor}
+- {name: Replit, ats: ashby, slug: replit}
+- {name: Modal, ats: ashby, slug: modal}
+- {name: Levels, ats: ashby, slug: levels}
+- {name: Middesk, ats: ashby, slug: middesk}
+- {name: Vanta, ats: ashby, slug: vanta}
+- {name: Abridge, ats: ashby, slug: abridge}
+- {name: Sardine, ats: ashby, slug: sardine}
+- {name: Decagon, ats: ashby, slug: decagon}
+- {name: Harvey, ats: ashby, slug: harvey}
+- {name: Sierra, ats: ashby, slug: sierra}
+- {name: Speak, ats: ashby, slug: speak}
+- {name: Crusoe, ats: ashby, slug: crusoe}
+- {name: Rilla, ats: ashby, slug: rilla}
+- {name: Suno, ats: ashby, slug: suno}
+- {name: ElevenLabs, ats: ashby, slug: elevenlabs}
+- {name: Baseten, ats: ashby, slug: baseten}
+- {name: Braintrust, ats: ashby, slug: braintrust}
+- {name: Lovable, ats: ashby, slug: lovable}
+- {name: Bland, ats: ashby, slug: bland}
+- {name: PostHog, ats: ashby, slug: posthog}
+- {name: Warp, ats: ashby, slug: warp}
+- {name: Rho, ats: ashby, slug: rho}
+- {name: Mercor, ats: ashby, slug: mercor}
+- {name: Persona, ats: ashby, slug: persona}
+- {name: Anrok, ats: ashby, slug: anrok}
+- {name: Orb, ats: ashby, slug: orb}
+- {name: Common Room, ats: ashby, slug: commonroom}
+- {name: Vellum, ats: ashby, slug: vellum}
+- {name: LangChain, ats: ashby, slug: langchain}
+- {name: Pinecone, ats: ashby, slug: pinecone}
+- {name: Weaviate, ats: ashby, slug: weaviate}
+- {name: Runpod, ats: ashby, slug: runpod}
+- {name: Merge, ats: ashby, slug: merge}
+- {name: Nango, ats: ashby, slug: nango}
+- {name: Endgame, ats: ashby, slug: endgame}
+- {name: Drata, ats: ashby, slug: drata}
+- {name: Secureframe, ats: ashby, slug: secureframe}
+- {name: Headway, ats: ashby, slug: headway}
+- {name: Cedar, ats: ashby, slug: cedar}
+- {name: Aurora Solar, ats: ashby, slug: aurorasolar}
+- {name: Resend, ats: ashby, slug: resend}
+- {name: Trigger.dev, ats: ashby, slug: triggerdev}
+- {name: Rula, ats: ashby, slug: rula}
+- {name: Skydio, ats: ashby, slug: skydio}
+- {name: Saronic, ats: ashby, slug: saronic}
+- {name: Whoop, ats: ashby, slug: whoop}
+- {name: Superpower, ats: ashby, slug: superpower}
+- {name: Eight Sleep, ats: ashby, slug: eightsleep}
+- {name: Attio, ats: ashby, slug: attio}
+- {name: Gamma, ats: ashby, slug: gamma}
+- {name: Zapier, ats: ashby, slug: zapier}
+- {name: Unit, ats: ashby, slug: unit}
+- {name: Column, ats: ashby, slug: column}
+- {name: Modern Treasury, ats: ashby, slug: moderntreasury}
+- {name: Poolside, ats: ashby, slug: poolside}
+- {name: Reflection AI, ats: ashby, slug: reflectionai}
+- {name: Character AI, ats: ashby, slug: character}
+- {name: Krea AI, ats: ashby, slug: krea}
+- {name: Zilch, ats: ashby, slug: zilch}
+- {name: Griffin, ats: ashby, slug: griffin}
+- {name: Snowflake, ats: ashby, slug: snowflake}
+- {name: Preply, ats: ashby, slug: preply}
+- {name: Visa, ats: smartrecruiters, slug: Visa}
+- {name: Equinox, ats: smartrecruiters, slug: Equinox}
+- {name: The Wonderful Company, ats: smartrecruiters, slug: TheWonderfulCompany}
+- {name: Version 1, ats: smartrecruiters, slug: Version1}
+- {name: Bosch Group, ats: smartrecruiters, slug: BoschGroup}
+- {name: Delivery Hero, ats: smartrecruiters, slug: DeliveryHero}
+- {name: Helloprint, ats: recruitee, slug: helloprint}
+- {name: Channable, ats: recruitee, slug: channable}
+- {name: Trusted Shops, ats: recruitee, slug: trustedshops}
+- {name: bunq, ats: recruitee, slug: bunq}
+- {name: CM.com, ats: recruitee, slug: cmcom}
+- {name: Intel, ats: workday, tenant: intel, wd: wd1, site: External}
+- {name: Salesforce, ats: workday, tenant: salesforce, wd: wd12, site: External_Career_Site}
+- {name: Adobe, ats: workday, tenant: adobe, wd: wd5, site: external_experienced}
+- {name: CVS Health, ats: workday, tenant: cvshealth, wd: wd1, site: CVS_Health_Careers}
+- {name: Vanguard, ats: workday, tenant: vanguard, wd: wd5, site: Vanguard_External}
+- {name: Autodesk, ats: workday, tenant: autodesk, wd: wd1, site: Ext}
+- {name: Target, ats: workday, tenant: target, wd: wd5, site: targetcareers}
+- {name: PayPal, ats: workday, tenant: paypal, wd: wd1, site: jobs}
+- {name: Nvidia, ats: workday, tenant: nvidia, wd: wd5, site: NVIDIAExternalCareerSite}
+- {name: Workday Inc, ats: workday, tenant: workday, wd: wd5, site: Workday}
