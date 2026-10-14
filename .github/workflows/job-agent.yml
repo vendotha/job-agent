@@ -3,6 +3,8 @@ name: job-agent
 on:
   schedule:
     - cron: "15 */4 * * *"      # every 4 hours (UTC). GitHub may delay runs by a few minutes.
+  push:
+    paths: ["resume/**", "agent.py", "matching.py", "companies.yaml"]   # re-run right after you add/change a resume
   workflow_dispatch:
     inputs:
       discover:
