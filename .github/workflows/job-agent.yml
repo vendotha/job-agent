@@ -1,0 +1,42 @@
+name: job-agent
+
+on:
+  schedule:
+    - cron: "15 */4 * * *"      # every 4 hours (UTC). GitHub may delay runs by a few minutes.
+  workflow_dispatch:
+    inputs:
+      discover:
+        description: "Run discover.py first (slow - tick this once, or when you add new company names)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: job-agent
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Discover companies (manual runs only)
+        if: ${{ inputs.discover }}
+        run: python discover.py
+      - name: Fetch jobs and rebuild jobs.xlsx
+        run: python agent.py
+      - name: Save results back to the repo
+        run: |
+          git config user.name "job-agent"
+          git config user.email "job-agent@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "update jobs $(date -u '+%Y-%m-%d %H:%M')"
+          git push
